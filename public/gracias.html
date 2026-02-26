@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por tu consulta! · Martín Obregón RE/MAX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B1D3A;
+            --gold: #C9A84C;
+            --gold-light: #E4C76B;
+            --cream: #FAF7F0;
+            --white: #FFFFFF;
+            --gray-100: #F5F3EE;
+            --gray-200: #E8E4DB;
+            --gray-400: #A09B8E;
+            --gray-600: #6B6559;
+            --green-wa: #25D366;
+            --green-wa-dark: #1DA851;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 24px;
+            background: linear-gradient(160deg, var(--navy) 0%, #132B52 50%, #1a3a6a 100%);
+        }
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.25);
+            max-width: 480px; width: 100%;
+            padding: 48px 36px 40px;
+            text-align: center;
+            animation: cardIn 0.6s ease both;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .icon { font-size: 56px; margin-bottom: 20px; }
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--navy); font-size: 1.9rem;
+            margin-bottom: 12px;
+        }
+        .desc {
+            color: var(--gray-600); font-size: 1rem;
+            line-height: 1.7; margin-bottom: 28px;
+        }
+        .desc strong { color: var(--navy); }
+        .info-box {
+            background: var(--gray-100);
+            border-left: 4px solid var(--gold);
+            border-radius: 12px;
+            padding: 20px 24px;
+            text-align: left;
+            margin-bottom: 32px;
+        }
+        .info-box h3 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--navy); font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .info-row {
+            display: flex; justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.9rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { color: var(--gray-400); font-weight: 500; }
+        .info-value { color: var(--navy); font-weight: 600; text-align: right; max-width: 60%; }
+
+        .wa-btn {
+            display: inline-flex; align-items: center; gap: 12px;
+            background: var(--green-wa); color: white;
+            padding: 18px 44px; border-radius: 60px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            border: none; cursor: pointer;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.35);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .wa-btn:hover {
+            background: var(--green-wa-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(37,211,102,0.4);
+        }
+        .wa-btn svg { width: 24px; height: 24px; fill: white; }
+
+        .countdown {
+            color: var(--gray-400); font-size: 0.85rem;
+            margin-top: 16px;
+        }
+        .footer-card {
+            margin-top: 32px; padding-top: 24px;
+            border-top: 1px solid var(--gray-200);
+            color: var(--gray-400); font-size: 0.82rem; line-height: 1.6;
+        }
+        .footer-card strong { color: var(--navy); }
+
+        @media (max-width: 520px) {
+            .card { padding: 36px 24px 32px; }
+            h1 { font-size: 1.55rem; }
+            .wa-btn { padding: 16px 32px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="icon">🏡</div>
+    <h1>¡Gracias por tu consulta!</h1>
+    <p class="desc">
+        Recibimos tu información.<br>
+        <strong>Para coordinar más rápido, conectate por WhatsApp:</strong>
+    </p>
+
+    <div class="info-box" id="infoBox" style="display:none;">
+        <h3>📋 Datos recibidos</h3>
+        <div class="info-row">
+            <span class="info-label">Nombre</span>
+            <span class="info-value" id="dNombre">-</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Pre-aprobación</span>
+            <span class="info-value" id="dPreaprobacion">-</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Visita</span>
+            <span class="info-value" id="dCuando">-</span>
+        </div>
+    </div>
+
+    <a href="#" class="wa-btn" id="waBtn" onclick="abrirWhatsApp(); return false;">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Abrir WhatsApp
+    </a>
+
+    <p class="countdown" id="countdown"></p>
+
+    <div class="footer-card">
+        <strong>Martín Obregón</strong> · RE/MAX Boulevard<br>
+        Asesor Inmobiliario · Córdoba, Argentina
+    </div>
+</div>
+
+<script>
+    function getParams() {
+        const p = new URLSearchParams(window.location.search);
+        return {
+            nombre: p.get('nombre') || p.get('name') || p.get('full_name') || '',
+            email: p.get('email') || '',
+            telefono: p.get('telefono') || p.get('phone') || p.get('phone_number') || '',
+            preaprobacion: p.get('preaprobacion') || p.get('q1') || p.get('question_1') || '',
+            cuando: p.get('cuando') || p.get('q2') || p.get('question_2') || '',
+            propiedad: p.get('propiedad') || p.get('prop') || 'casa en Saldán'
+        };
+    }
+
+    function init() {
+        const d = getParams();
+        const hasData = d.nombre || d.preaprobacion || d.cuando;
+
+        if (hasData) {
+            document.getElementById('infoBox').style.display = 'block';
+            document.getElementById('dNombre').textContent = d.nombre || '-';
+            document.getElementById('dPreaprobacion').textContent = d.preaprobacion || '-';
+            document.getElementById('dCuando').textContent = d.cuando || '-';
+        }
+
+        // Auto redirect countdown
+        let sec = 8;
+        const el = document.getElementById('countdown');
+        const tick = () => {
+            if (sec > 0) {
+                el.textContent = `Redirigiendo a WhatsApp en ${sec} segundos...`;
+                sec--;
+                setTimeout(tick, 1000);
+            } else {
+                el.textContent = 'Abriendo WhatsApp...';
+                abrirWhatsApp();
+            }
+        };
+        tick();
+    }
+
+    function abrirWhatsApp() {
+        const d = getParams();
+        let msg = `Hola! Completé el formulario sobre la ${d.propiedad}.`;
+
+        if (d.nombre || d.email || d.telefono) {
+            msg += `\n\n👤 *Mis datos:*`;
+            if (d.nombre) msg += `\n- Nombre: ${d.nombre}`;
+            if (d.email) msg += `\n- Email: ${d.email}`;
+            if (d.telefono) msg += `\n- Teléfono: ${d.telefono}`;
+        }
+        if (d.preaprobacion) msg += `\n- Pre-aprobación: ${d.preaprobacion}`;
+        if (d.cuando) msg += `\n- Cuándo quiero visitarla: ${d.cuando}`;
+
+        msg += `\n\n¿Podemos coordinar una visita?`;
+
+        const num = '5493515649394';
+        window.location.href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+    }
+
+    window.onload = init;
+</script>
+
+</body>
+</html>

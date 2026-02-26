@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    { "source": "/gracias", "destination": "/gracias.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/catalogo", "destination": "/catalogo.html" },
+    { "source": "/propiedad/:id", "destination": "/propiedad.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ]
+}
