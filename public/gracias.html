@@ -166,7 +166,22 @@
 
     function init() {
         const d = getParams();
+        const p = new URLSearchParams(window.location.search);
         const hasData = d.nombre || d.preaprobacion || d.cuando;
+
+        // ─── DEBUG MODE: agregar ?debug=1 a la URL para ver TODOS los parámetros ───
+        if (p.get('debug') === '1') {
+            const allParams = {};
+            p.forEach((value, key) => { allParams[key] = value; });
+            console.log('🔍 DEBUG - Todos los parámetros recibidos:', allParams);
+            console.log('🔍 DEBUG - URL completa:', window.location.href);
+            
+            const debugBox = document.createElement('div');
+            debugBox.style.cssText = 'background:#1a1a2e;color:#0f0;padding:16px;border-radius:12px;margin-bottom:20px;text-align:left;font-family:monospace;font-size:0.8rem;word-break:break-all;';
+            debugBox.innerHTML = '<strong style="color:#ff0;">🔍 MODO DEBUG</strong><br><br>' +
+                Object.entries(allParams).map(([k,v]) => `<span style="color:#0ff;">${k}</span> = "${v}"`).join('<br>');
+            document.querySelector('.card').insertBefore(debugBox, document.querySelector('.info-box'));
+        }
 
         if (hasData) {
             document.getElementById('infoBox').style.display = 'block';
